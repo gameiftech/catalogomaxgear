@@ -106,15 +106,15 @@
         }
 
         tr.innerHTML = `
-          <td data-label="Código">${prod.codigo}</td>
-          <td data-label="Descrição">${prod.descricao}</td>
+          <td data-label="Código" class="compacta">${prod.codigo}</td>
+          <td data-label="Descrição" class="compacta">${prod.descricao}</td>
           <td data-label="Tipo" class="compacta">${prod.tipo}</td>
           <td data-label="Unidade" class="compacta">${prod.unidade}</td>
           <td data-label="Armazém" class="compacta">${prod.armazem}</td>
           <td class="compacta" data-label="Grupo">${prod.grupo}</td>
           <td class="compacta" data-label="Bloqueio">${prod.bloqueio}</td>
-          <td data-label="Local">${prod.local}</td>
-          <td data-label="Prateleira">${prod.prateleira}</td>
+          <td data-label="Local" class="compacta">${prod.local}</td>
+          <td data-label="Prateleira" class="compacta">${prod.prateleira}</td>
         `;
         tabela.appendChild(tr);
       });
