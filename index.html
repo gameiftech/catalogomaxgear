@@ -114,7 +114,7 @@
     function atualizarTotais(lista) {
       const total = lista.length;
       const bloqueados = lista.filter(p => p.bloqueio && p.bloqueio.toLowerCase() === "sim").length;
-      totalItens.innerText = `Total de produtos: ${total}`;
+      totalItens.innerText = `Total de itens: ${total}`;
       totalBloqueados.innerText = `Itens bloqueados: ${bloqueados}`;
     }
 
