@@ -87,17 +87,17 @@
             tr.classList.add("bloqueado");
           }
 
-          tr.innerHTML = `
-            <td>${prod.codigo}</td>
-            <td>${prod.descricao}</td>
-            <td>${prod.tipo}</td>
-            <td>${prod.unidade}</td>
-            <td>${prod.armazem}</td>
-            <td>${prod.grupo}</td>
-            <td>${prod.bloqueio}</td>
-            <td>${prod.local}</td>
-            <td>${prod.prateleira}</td>
-          `;
+         tr.innerHTML = `
+          <td data-label="Código" class="compacta">${prod.codigo}</td>
+          <td data-label="Descrição">${prod.descricao}</td>
+          <td data-label="Tipo" class="compacta">${prod.tipo}</td>
+          <td data-label="Unidade" class="compacta">${prod.unidade}</td>
+          <td data-label="Armazém" class="compacta">${prod.armazem}</td>
+          <td class="compacta" data-label="Grupo">${prod.grupo}</td>
+          <td class="compacta" data-label="Bloqueio">${prod.bloqueio}</td>
+          <td data-label="Local" class="compacta">${prod.local}</td>
+          <td data-label="Prateleira" class="compacta">${prod.prateleira}</td>
+        `;
           tabela.appendChild(tr);
         });
       }
