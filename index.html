@@ -11,9 +11,15 @@
 <body>
 
   <div class="topo-fixo">
-    <img src="MAXGEAR.jpg" alt="Logo MAX GEAR" class="logo">
+    <img src="/MAXGEAR.jpg" alt="Logo MAX GEAR" class="logo">
     <h1>Catálogo Geral dos Produtos</h1>
-    <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
+    <div class="campo-busca">
+  <svg class="icone-lupa" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
+    <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+  </svg>
+  <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
+</div>
+
     <div class="subtotal" id="subtotal">
       <span id="total-itens">Total de itens: 0</span>
       <span id="total-bloqueados">Itens bloqueados: 0</span>

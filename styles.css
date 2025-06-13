@@ -157,3 +157,25 @@ tr.bloqueado {
     .subtotal span {
       margin: 0 10px;
     }
+
+ .campo-busca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 400px;
+}
+
+.campo-busca input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.campo-busca .icone-lupa {
+  flex-shrink: 1;
+}
+
