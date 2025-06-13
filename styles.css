@@ -1,0 +1,123 @@
+body {
+  background-color: rgb(3, 0, 0);
+  color: #FFC000;
+  font-family: Arial, sans-serif;
+}
+
+.topo-fixo {
+  background-color: black;
+  color: #FFC000;
+  padding: 15px;
+  text-align: center;
+}
+
+input#busca {
+  padding: 8px;
+  width: 50%;
+  max-width: 300px;
+  display: block;
+  margin: 15px auto;
+  border: 2px solid #FFC000;
+  background-color: white;
+  color: black;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 600px) {
+  input#busca {
+    width: 80%;
+    font-size: 12px;
+  }
+}
+
+.tabela-container {
+  position: relative;
+  overflow-y: auto;
+  max-height: 600px;
+  border-top: 1px solid black; /* Garante que o topo da tabela tenha um limite visual */
+}
+
+/* Define um contorno preto e ajusta a tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+thead {
+  display: table-header-group; /* Mantém o alinhamento correto */
+  position: sticky;
+  top: 0;
+  background-color: black;
+  border-bottom: 1px solid black; /* Adiciona um limite para evitar sobreposição visual */
+  z-index: 1000;
+}
+
+th {
+  background-color: #FFC000; /* Fundo sólido para evitar transparências */
+  color: black;
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  font-size: 12px;
+}
+
+/* Ajuste no container da tabela para que o cabeçalho não sobreponha */
+.tabela-container {
+  position: relative;
+  margin-top: 2px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+td {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 5px;
+  text-align: left;
+  font-size: 12px;
+}
+
+/* Ajusta o layout para telas menores */
+@media (max-width: 600px) {
+  th, td {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+.compacta {
+  text-align: center;
+}
+
+/* Ajuste no logo para melhor posicionamento */
+.logo {
+  display: block;
+  margin: 0 auto 10px;
+  max-width: 180px;
+}
+
+/* Fundo branco normal */
+tbody tr {
+  background-color: white;
+  color: black;
+}
+
+/* Quando selecionada, fundo amarelo com texto preto */
+tr.selecionada {
+  background-color: #FFC000 !important;
+  color: black !important;
+}
+
+/* Remove qualquer background padrão dos <td> para não atrapalhar */
+td {
+  background-color: transparent !important;
+}
+
+tr.bloqueado {
+  background-color: #FF9999 !important;
+  color: black !important;
+}
