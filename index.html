@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/png" href="images.png" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
 </head>
 <body>
 
@@ -15,11 +14,11 @@
     <img src="MAXGEAR.jpg" alt="Logo MAX GEAR" class="logo">
     <h1>Catálogo Geral dos Produtos</h1>
     <div class="campo-busca">
-  <svg class="icone-lupa" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
-    <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-  </svg>
-  <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
-</div>
+      <svg class="icone-lupa" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
+        <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+      </svg>
+      <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
+    </div>
 
     <div class="subtotal" id="subtotal">
       <span id="total-itens">Total de itens: 0</span>
@@ -52,110 +51,6 @@
     <a href="https://www.linkedin.com/in/deividfcastro/" target="_blank">Desenvolvido por Deivid Castro</a>
   </footer>
 
-  <script>
-    const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmEezXjOHCJjTEzp30PF3SjBg_1lJ0yYsYOyAftIQPCD2UE2MQmsRH5nhc3ti5cOR8Vg1z8urkbuDE/pub?output=csv";
-
-    const inputBusca = document.getElementById("busca");
-    const tabela = document.getElementById("tabela-produtos");
-    const totalItens = document.getElementById("total-itens");
-    const totalBloqueados = document.getElementById("total-bloqueados");
-
-    let produtos = [];
-
- async function carregarDados() {
-  const resposta = await fetch(URL_CSV);
-  const texto = await resposta.text();
-
-  const resultado = Papa.parse(texto, {
-    header: true,
-    skipEmptyLines: true
-  });
-
-  produtos = resultado.data.map(linha => ({
-    codigo: linha["Código"] || "",
-    descricao: linha["Descrição"] || "",
-    tipo: linha["Tipo"] || "",
-    unidade: linha["Unidade"] || "",
-    armazem: linha["Armazém"] || "",
-    grupo: linha["Grupo"] || "",
-    bloqueio: linha["Bloqueio"] || "",
-    local: linha["Local"] || "",
-    prateleira: linha["Prateleira"] || ""
-  }));
-
-  renderizarTabela(produtos);
-}
-
-    function renderizarTabela(lista) {
-      tabela.innerHTML = "";
-
-      if (lista.length === 0) {
-        tabela.innerHTML = "<tr><td colspan='9'>Nenhum produto encontrado.</td></tr>";
-      } else {
-        lista.forEach(prod => {
-          const tr = document.createElement("tr");
-
-          if (prod.bloqueio && prod.bloqueio.toLowerCase() === "sim") {
-            tr.classList.add("bloqueado");
-          }
-
-     tr.innerHTML = `
-          <td data-label="Código" class="compacta">${prod.codigo}</td>
-          <td data-label="Descrição">${prod.descricao}</td>
-          <td data-label="Tipo" class="compacta">${prod.tipo}</td>
-          <td data-label="Unidade" class="compacta">${prod.unidade}</td>
-          <td data-label="Armazém" class="compacta">${prod.armazem}</td>
-          <td class="compacta" data-label="Grupo">${prod.grupo}</td>
-          <td class="compacta" data-label="Bloqueio">${prod.bloqueio}</td>
-          <td data-label="Local" class="compacta">${prod.local}</td>
-          <td data-label="Prateleira" class="compacta">${prod.prateleira}</td>
-        `;
-          tabela.appendChild(tr);
-        });
-      }
-
-      atualizarTotais(lista);
-      ativarSelecaoLinhas();
-    }
-
-    function atualizarTotais(lista) {
-      const total = lista.length;
-      const bloqueados = lista.filter(p => p.bloqueio && p.bloqueio.toLowerCase() === "sim").length;
-      totalItens.innerText = `Total de itens: ${total}`;
-      totalBloqueados.innerText = `Itens bloqueados: ${bloqueados}`;
-    }
-
-    function ativarSelecaoLinhas() {
-      const linhas = tabela.querySelectorAll("tr");
-      linhas.forEach(linha => {
-        linha.addEventListener("click", () => {
-          linhas.forEach(l => l.classList.remove("selecionada"));
-          linha.classList.add("selecionada");
-        });
-      });
-    }
-
-    function debounce(func, delay) {
-      let timer;
-      return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), delay);
-      };
-    }
-
-    function filtrarProdutos() {
-      const termo = inputBusca.value.toLowerCase();
-      const filtrado = produtos.filter(p =>
-        p.codigo.toLowerCase().includes(termo) ||
-        p.descricao.toLowerCase().includes(termo)
-      );
-      renderizarTabela(filtrado);
-    }
-
-    inputBusca.addEventListener("input", debounce(filtrarProdutos, 300));
-
-    carregarDados();
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
