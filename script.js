@@ -10,34 +10,33 @@ let produtos = [];
 async function carregarDados() {
   tabela.innerHTML = "<tr><td colspan='9'>Carregando Dados...</td></tr>";
 
-  if (sessionStorage.getItem("dadosProdutos")) {
-    produtos = JSON.parse(sessionStorage.getItem("dadosProdutos"));
-    renderizarTabela(produtos);
-    return;
-  }
-
   try {
-    const resposta = await fetch(URL_CSV);
-    const texto = await resposta.text();
+    if (sessionStorage.getItem("dadosProdutos")) {
+      produtos = JSON.parse(sessionStorage.getItem("dadosProdutos"));
+    } else {
+      const resposta = await fetch(URL_CSV);
+      const texto = await resposta.text();
 
-    const resultado = Papa.parse(texto, {
-      header: true,
-      skipEmptyLines: true
-    });
+      const resultado = Papa.parse(texto, {
+        header: true,
+        skipEmptyLines: true
+      });
 
-    produtos = resultado.data.map(linha => ({
-      codigo: linha["Código"] || "",
-      descricao: linha["Descrição"] || "",
-      tipo: linha["Tipo"] || "",
-      unidade: linha["Unidade"] || "",
-      armazem: linha["Armazém"] || "",
-      grupo: linha["Grupo"] || "",
-      bloqueio: linha["Bloqueio"] || "",
-      local: linha["Local"] || "",
-      prateleira: linha["Prateleira"] || ""
-    }));
+      produtos = resultado.data.map(linha => ({
+        codigo: linha["Código"] || "",
+        descricao: linha["Descrição"] || "",
+        tipo: linha["Tipo"] || "",
+        unidade: linha["Unidade"] || "",
+        armazem: linha["Armazém"] || "",
+        grupo: linha["Grupo"] || "",
+        bloqueio: linha["Bloqueio"] || "",
+        local: linha["Local"] || "",
+        prateleira: linha["Prateleira"] || ""
+      }));
 
-    sessionStorage.setItem("dadosProdutos", JSON.stringify(produtos));
+      sessionStorage.setItem("dadosProdutos", JSON.stringify(produtos));
+    }
+
     renderizarTabela(produtos);
   } catch (erro) {
     tabela.innerHTML = "<tr><td colspan='9'>Erro ao carregar dados.</td></tr>";
@@ -47,19 +46,11 @@ async function carregarDados() {
 
 function renderizarTabela(lista) {
   tabela.innerHTML = "";
-
-  if (lista.length === 0) {
-    tabela.innerHTML = "<tr><td colspan='9'>Nenhum produto encontrado.</td></tr>";
-    return;
-  }
-
   const fragment = document.createDocumentFragment();
 
   lista.forEach(prod => {
     const tr = document.createElement("tr");
-    if (prod.bloqueio.toLowerCase() === "sim") {
-      tr.classList.add("bloqueado");
-    }
+    if (prod.bloqueio.toLowerCase() === "sim") tr.classList.add("bloqueado");
 
     tr.innerHTML = `
       <td data-label="Código" class="compacta">${prod.codigo}</td>
@@ -72,18 +63,24 @@ function renderizarTabela(lista) {
       <td data-label="Local" class="compacta">${prod.local}</td>
       <td data-label="Prateleira" class="compacta">${prod.prateleira}</td>
     `;
+
     fragment.appendChild(tr);
   });
 
   tabela.appendChild(fragment);
-  atualizarTotais(lista);
   ativarSelecaoLinhas();
+  atualizarTotais();
 }
 
-function atualizarTotais(lista) {
-  const total = lista.length;
-  const bloqueados = lista.filter(p => p.bloqueio.toLowerCase() === "sim").length;
-  totalItens.innerText = `Total de itens: ${total}`;
+function atualizarTotais() {
+  const linhasVisiveis = tabela.querySelectorAll("tr:not([style*='display: none'])");
+  let bloqueados = 0;
+
+  linhasVisiveis.forEach(linha => {
+    if (linha.classList.contains("bloqueado")) bloqueados++;
+  });
+
+  totalItens.innerText = `Total de itens: ${linhasVisiveis.length}`;
   totalBloqueados.innerText = `Itens bloqueados: ${bloqueados}`;
 }
 
@@ -97,22 +94,19 @@ function ativarSelecaoLinhas() {
   });
 }
 
-function debounce(func, delay) {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => func.apply(this, args), delay);
-  };
-}
-
-function filtrarProdutos() {
+function aplicarFiltro() {
   const termo = inputBusca.value.toLowerCase();
-  const filtrado = produtos.filter(p =>
-    p.codigo.toLowerCase().includes(termo) ||
-    p.descricao.toLowerCase().includes(termo)
-  );
-  renderizarTabela(filtrado);
+  const linhas = tabela.querySelectorAll("tr");
+
+  linhas.forEach(linha => {
+    const codigo = linha.cells[0]?.textContent.toLowerCase() || "";
+    const descricao = linha.cells[1]?.textContent.toLowerCase() || "";
+    const visivel = codigo.includes(termo) || descricao.includes(termo);
+    linha.style.display = visivel ? "" : "none";
+  });
+
+  atualizarTotais();
 }
 
-inputBusca.addEventListener("input", debounce(filtrarProdutos, 100));
+inputBusca.addEventListener("input", aplicarFiltro);
 carregarDados();
