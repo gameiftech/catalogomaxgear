@@ -114,5 +114,5 @@ function filtrarProdutos() {
   renderizarTabela(filtrado);
 }
 
-inputBusca.addEventListener("input", debounce(filtrarProdutos, 300));
+inputBusca.addEventListener("input", debounce(filtrarProdutos, 100));
 carregarDados();
