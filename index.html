@@ -3,52 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catálogo de Produtos</title>
+  <meta name="description" content="Catálogo de produtos MAX GEAR - Sistema de gerenciamento de inventário">
+  <title>MAX GEAR | Catálogo de Produtos</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="images.png" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
+  <div id="loading-overlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p>Carregando catálogo...</p>
+    </div>
+  </div>
 
   <div class="topo-fixo">
-    <img src="MAXGEAR.jpg" alt="Logo MAX GEAR" class="logo">
-    <h1>Catálogo Geral dos Produtos</h1>
-    <div class="campo-busca">
-      <svg class="icone-lupa" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
-        <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-      </svg>
-      <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
+    <div class="header-container">
+      <img src="logo.png" alt="Logo MAX GEAR" class="logo">
+      <div class="header-text">
+        <h1>Catálogo Geral dos Produtos</h1>
+        <p class="subtitle">Sistema de gerenciamento de inventário</p>
+      </div>
+    </div>
+    
+    <div class="search-container">
+      <div class="campo-busca">
+        <svg class="icone-lupa" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFC000" viewBox="0 0 24 24">
+          <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+        </svg>
+        <input type="text" id="busca" placeholder="Buscar por código ou descrição..." />
+        <button id="btn-limpar" class="btn-action" title="Limpar busca">
+          <i class="fas fa-times"></i>
+        </button>
+        <button id="btn-nao-bloqueados" class="btn-action" title="Mostrar apenas não bloqueados">
+          <i class="fas fa-filter"></i>
+        </button>
+        <button id="btn-ajuda" class="btn-action" title="Ajuda e dicas">
+          <i class="fas fa-question"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="subtotal" id="subtotal">
-      <span id="total-itens">Total de itens: 0</span>
-      <span id="total-bloqueados">Itens bloqueados: 0</span>
-    </div>
+    <div class="info-container">
+  <div class="subtotal" id="subtotal">
+    <span id="total-itens">0 itens</span>
+    <span class="divider">|</span>
+    <span id="total-bloqueados">0 bloqueados</span>
+    <span class="divider">|</span>
+    <span id="ultima-atualizacao">Últ. atualização: carregando...</span>
+  </div>
+
+  <div class="export-buttons">
+    <button id="btn-export-csv" class="btn-export">
+      <i class="fas fa-file-csv"></i> CSV
+    </button>
+    <button id="btn-export-excel" class="btn-export">
+      <i class="fas fa-file-excel"></i> Excel
+    </button>
+    <button id="btn-atualizar" class="btn-export" title="Atualizar dados">
+      <i class="fas fa-sync-alt"></i> Atualizar
+    </button>
+  </div>
+</div>
   </div>
 
   <div class="tabela-container">
+  <div class="tabela-scroll">
     <table>
       <thead>
         <tr>
-          <th class="compacta">Código</th>
-          <th class="compacta">Descrição</th>
-          <th class="compacta">Tipo</th>
-          <th class="compacta">Unidade</th>
-          <th class="compacta">Armazém</th>
-          <th class="compacta">Grupo</th>
-          <th class="compacta">Bloqueio</th>
-          <th class="compacta">Local</th>
-          <th class="compacta">Prateleira</th>
+          <th class="compacta sortable" data-sort="codigo">Código <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="descricao">Descrição <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="tipo">Tipo <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="unidade">Unidade <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="armazem">Armazém <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="grupo">Grupo <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="bloqueio">Bloqueio <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="local">Local <i class="fas fa-sort"></i></th>
+          <th class="compacta sortable" data-sort="prateleira">Prateleira <i class="fas fa-sort"></i></th>
         </tr>
       </thead>
       <tbody id="tabela-produtos">
-        <tr><td colspan="9">Carregando dados...</td></tr>
+        <!-- Dados serão carregados aqui -->
       </tbody>
     </table>
   </div>
+  </div>
+
+  <div id="paginacao" class="paginacao">
+    <button id="btn-anterior" class="btn-paginacao" disabled>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span id="info-paginacao">Página 1 de 1</span>
+    <button id="btn-proximo" class="btn-paginacao" disabled>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div id="modal-ajuda" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Ajuda do Catálogo</h2>
+      <div class="dicas-container">
+        <div class="dica">
+          <h3><i class="fas fa-search"></i> Busca</h3>
+          <p>Digite qualquer termo para buscar por código ou descrição do produto.</p>
+        </div>
+        <div class="dica">
+          <h3><i class="fas fa-filter"></i> Filtros</h3>
+          <p>Clique no ícone de filtro para mostrar apenas produtos não bloqueados.</p>
+        </div>
+        <div class="dica">
+          <h3><i class="fas fa-sort"></i> Ordenação</h3>
+          <p>Clique nos cabeçalhos da tabela para ordenar os resultados.</p>
+        </div>
+        <div class="dica">
+          <h3><i class="fas fa-download"></i> Exportação</h3>
+          <p>Exporte os dados para CSV ou Excel usando os botões na parte superior.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer>
-    <a href="https://www.linkedin.com/in/deividfcastro/" target="_blank">Desenvolvido por Deivid Castro</a>
+    <div class="footer-container">
+      <a href="https://www.linkedin.com/in/deividfcastro/" target="_blank">
+        <i class="fab fa-linkedin"></i> <span class="developer-name">Desenvolvido por: Deivid Castro</span>
+      </a>
+      <span class="version">v1.2.0</span>
+    </div>
   </footer>
 
   <script src="script.js"></script>
