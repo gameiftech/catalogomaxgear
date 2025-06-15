@@ -819,3 +819,103 @@ body {
     padding: 5px;
   }
 }
+
+/* Legenda */
+.legenda-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--background-color);
+  border-radius: 8px;
+}
+
+.legenda-container h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.legenda-cor {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid var(--border-color);
+}
+
+.legenda-cor.bloqueado {
+  background-color: var(--error-color);
+}
+
+.legenda-cor.selecionada {
+  background-color: var(--primary-color);
+}
+
+/* Legenda compacta */
+.legenda-compacta {
+  margin: 0 auto 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.legenda-linha {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 15px;
+  font-size: 12px;
+}
+
+.legenda-cor {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid var(--border-color);
+}
+
+.legenda-cor.bloqueado {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+}
+
+.legenda-cor.selecionada {
+  background-color: var(--primary-color);
+  border-color: var(--primary-dark);
+}
+
+/* Reduza o tamanho do modal em mobile */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 15px;
+  }
+  
+  .legenda-linha {
+    gap: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .legenda-cor {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .dica h3 {
+    font-size: 14px;
+  }
+  
+  .dica p {
+    font-size: 12px;
+    margin: 5px 0 0;
+  }
+}
