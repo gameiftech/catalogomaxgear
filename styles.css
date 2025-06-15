@@ -23,7 +23,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  padding-bottom: 60px;
+  padding-bottom: 40px; /* Reduzi de 60px para 40px */
   line-height: 1.6;
   overflow-x: hidden; /* Mantém apenas a rolagem vertical */
   overflow-y: auto;   /* Permite rolagem vertical quando necessário */
@@ -78,14 +78,14 @@ body {
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow);
-  padding: 10px 20px; /* Reduzido de 15px 20px */
+  padding: 10px 15px; /* Reduzido de 15px 20px */
 }
 
 .header-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 15px;
   flex-wrap: wrap;
 }
@@ -95,7 +95,7 @@ body {
 }
 
 .logo {
-  height: 60px;
+  height: 50px;
   width: auto;
   transition: var(--transition);
 }
@@ -201,7 +201,7 @@ h1 {
   color: var(--secondary-color);
   font-weight: bold;
   text-align: center;
-  padding: 8px 12px; /* Reduzido de 10px 15px */
+  padding: 4px 10px; /* Reduzido de 8px 12px */
   font-size: 12px;   /* Reduzido de 14px */
   border-radius: 30px;
   display: flex;
@@ -210,24 +210,24 @@ h1 {
   min-width: auto;   /* Removida largura fixa */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  gap: 8px;          /* Espaço entre elementos */
+  gap: 6px;          /* Espaço entre elementos reduzido */
 }
 
 /* Textos individuais */
 #total-itens, 
 #total-bloqueados, 
 #ultima-atualizacao {
-  font-size: 11px;   /* Texto principal menor */
+  font-size: 10px;   /* Texto principal menor */
   white-space: nowrap; /* Evitar quebra de linha */
 }
 
 .subtotal span {
-     margin: 5px auto; /* Reduzido de 0 auto */
+     margin: 0 2px; /* Espaçamento reduzido entre itens */
   }
 
 .divider {
   color: rgba(0, 0, 0, 0.3);
-   font-size: 12px;   /* Divisor menor */
+  font-size: 9px;   /* Divisor menor */
   opacity: 0.6;
 }
 
@@ -247,7 +247,7 @@ h1 {
   border: none;
   border-radius: 30px;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
   transition: var(--transition);
@@ -264,7 +264,7 @@ h1 {
 
 /* Tabela e conteúdo */
 .tabela-container {
-  margin: 10px auto; /* Reduzido de 20px */
+  margin: 10px auto 5px; /* Reduzi a margem inferior de 20px para 5px */
   width: 95%;
   max-width: 1200px;
   border-radius: 8px;
@@ -278,8 +278,8 @@ h1 {
 }
 
 .tabela-scroll {
-  overflow-y: auto;
-  max-height: calc(100vh - 250px); /* Ajuste conforme necessário */
+   overflow-y: auto;
+  max-height: calc(100vh - 270px); /* Aumentei a altura para reduzir o gap */
 }
 
 table {
@@ -309,7 +309,8 @@ tbody::after {
 /* Responsividade */
 @media (max-width: 768px) {
   .tabela-container {
-    max-height: calc(100vh - 380px);
+    max-height: calc(100vh - 300px);
+    margin-bottom: 0; /* Remove margem inferior em mobile */
     font-size: 10px;
   }
   
@@ -418,14 +419,15 @@ tr.bloqueado {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin: 15px 0;
-  padding: 10px;
+  gap: 10px;
+  margin: 5px 0 15px; /* Reduzi a margem superior de 15px para 5px */
+  padding: 8px; /* Reduzi o padding de 10px */
   background-color: var(--secondary-color);
   border-radius: 30px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 5px; /* Reduzi o espaçamento inferior */
 }
 
 .btn-paginacao {
@@ -433,8 +435,8 @@ tr.bloqueado {
   color: var(--secondary-color);
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -455,7 +457,7 @@ tr.bloqueado {
 }
 
 #info-paginacao {
-   font-size: 14px;
+  font-size: 12px;
   color: var(--primary-color);
   font-weight: bold;
   min-width: 100px;
@@ -533,17 +535,18 @@ tr.bloqueado {
 }
 
 footer {
-  position: fixed;
+  flex-shrink: 0;
+  position: relative;
   bottom: 0;
   width: 100%;
   background: var(--secondary-color);
   color: var(--primary-color);
   text-align: center;
-  padding: 12px 0;
-  font-size: 14px;
+  padding: 8px 0; /* Reduzi de 12px 0 */
+  font-size: 12px;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
   z-index: 100;
-
+  margin-top: auto;
 }
 
 .footer-container {
@@ -552,7 +555,7 @@ footer {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 footer a {
@@ -651,10 +654,12 @@ footer a:hover {
   }
   
   .tabela-container {
+    flex: 1;
     margin: 10px auto;
-  border-radius: 8px;
-  background-color: white;
-  max-height: calc(100vh - 200px); /* Ajuste conforme seu header */
+    border-radius: 8px;
+    background-color: white;
+    min-height: 300px;
+    max-height: calc(100vh - 250px); /* Ajuste conforme seu header */
   }
   
   th, td {
@@ -680,17 +685,18 @@ footer a:hover {
   }
   
   .btn-export {
-    padding: 6px 10px; /* Reduzido de 8px 12px */
-  font-size: 12px;   /* Reduzido de 13px */
-  height: 32px;      /* Altura fixa para uniformidade */
-  border-radius: 16px; /* Metade da altura para manter o arredondamento */
-  gap: 5px;          /* Espaço entre ícone e texto */
+    height: 28px; /* Reduzindo a altura */
+    padding: 0 12px; /* Reduzindo o padding horizontal */
+    font-size: 12px; /* Diminuindo o tamanho da fonte */
+    border-radius: 14px; /* Ajustando o border-radius para metade da altura */
+    min-width: 80px; /* Largura mínima reduzida */
+    gap: 5px;          /* Espaço entre ícone e texto */
   }
 
   /* Ícones dentro dos botões */
 .btn-export i {
-  font-size: 12px;   /* Reduzido de 14px */
-   margin-right: 0;
+    margin-right: 0;
+    font-size: 10px;
 }
 
   
@@ -728,17 +734,21 @@ footer a:hover {
   }
   @media (max-width: 768px) {
   .btn-export {
-    padding: 5px 8px;
+    height: 26px;
+    padding: 0 10px;
     font-size: 11px;
-    height: 30px;
+    border-radius: 13px;
+    min-width: 70px;
   }
 }
+
   @media (max-width: 480px) {
   .btn-export {
-    padding: 4px 6px;
+    height: 24px;
+    padding: 0 8px;
     font-size: 10px;
-    height: 28px;
-    min-width: unset;
+    border-radius: 12px;
+    min-width: 60px;
   }
   }
   /* Opcional: esconder texto e mostrar apenas ícones */
@@ -746,4 +756,66 @@ footer a:hover {
     display: none;
   }
   
- 
+ html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Ajustar container principal */
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .tabela-container {
+    max-height: calc(100vh - 280px);
+  }
+}
+ /* Ajuste para telas pequenas */
+@media (max-width: 480px) {
+  .subtotal {
+    padding: 3px 8px;
+    font-size: 10px;
+    gap: 4px;
+  }
+}
+  #total-itens, 
+  #total-bloqueados, 
+  #ultima-atualizacao {
+    font-size: 9px;
+  }
+
+ /* Ajustes para mobile */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 35px;
+  }
+  
+  .paginacao {
+    margin-bottom: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-bottom: 30px;
+  }
+  
+  footer {
+    padding: 6px 0;
+  }
+  
+  .paginacao {
+    margin-bottom: 0;
+    padding: 5px;
+  }
+}
