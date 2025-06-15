@@ -202,7 +202,7 @@ h1 {
   font-weight: bold;
   text-align: center;
   padding: 4px 10px; /* Reduzido de 8px 12px */
-  font-size: 12px;   /* Reduzido de 14px */
+  font-size: 16px;   /* Reduzido de 14px */
   border-radius: 30px;
   display: flex;
   justify-content: center;
@@ -217,7 +217,7 @@ h1 {
 #total-itens, 
 #total-bloqueados, 
 #ultima-atualizacao {
-  font-size: 10px;   /* Texto principal menor */
+  font-size: 14px;   /* Texto principal menor */
   white-space: nowrap; /* Evitar quebra de linha */
 }
 
@@ -784,14 +784,14 @@ body {
 @media (max-width: 480px) {
   .subtotal {
     padding: 3px 8px;
-    font-size: 10px;
+    font-size: 14px;
     gap: 4px;
   }
 }
   #total-itens, 
   #total-bloqueados, 
   #ultima-atualizacao {
-    font-size: 9px;
+    font-size: 12px;
   }
 
  /* Ajustes para mobile */
